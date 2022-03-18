@@ -1,22 +1,25 @@
 <?php
-
-const RESULT_WINNER = 1;
-const RESULT_LOSER = -1;
-const RESULT_DRAW = 0;
-const RESULT_POSSIBILITIES = [RESULT_WINNER, RESULT_LOSER, RESULT_DRAW];
-
-function probabilityAgainst(int $levelPlayerOne, int $againstLevelPlayerTwo)
+class Encouter 
 {
-    return 1/(1+(10 ** (($againstLevelPlayerTwo - $levelPlayerOne)/400)));
+    
+
+public const RESULT_WINNER = 1;
+public const RESULT_LOSER = -1;
+public const RESULT_DRAW = 0;
+public const RESULT_POSSIBILITIES = [RESULT_WINNER, RESULT_LOSER, RESULT_DRAW];
+
+public function probabilityAgainst(int $levelPlayerOne, int $againstLevelPlayerTwo)
+{
+    return $this->(1/(1+(10 ** (($againstLevelPlayerTwo - $levelPlayerOne)/400))));
 }
 
-function setNewLevel(int &$levelPlayerOne, int $againstLevelPlayerTwo, int $playerOneResult)
+public function setNewLevel(int &$levelPlayerOne, int $againstLevelPlayerTwo, int $playerOneResult)
 {
-    if (!in_array($playerOneResult, RESULT_POSSIBILITIES)) {
+    if (!in_array($this->playerOneResult, RESULT_POSSIBILITIES)) {
         trigger_error(sprintf('Invalid result. Expected %s',implode(' or ', RESULT_POSSIBILITIES)));
     }
 
-    $levelPlayerOne += (int) (32 * ($playerOneResult - probabilityAgainst($levelPlayerOne, $againstLevelPlayerTwo)));
+    $this->levelPlayerOne += (int) (32 * ($this->playerOneResult - probabilityAgainst($this->levelPlayerOne, $this->againstLevelPlayerTwo)));
 }
 
 $greg = 400;
